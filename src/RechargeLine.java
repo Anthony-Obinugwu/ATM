@@ -7,70 +7,124 @@ public class RechargeLine extends DisplayMenu {
 //    @Override
     public void buyData() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter recipient's phone number: ");
-        String number = scanner.nextLine();
-        String line = credit(number);
-        System.out.println("This is an " + line + " number, do you wish to proceed? (Yes/No) ");
-        String answer = scanner.nextLine();
-        if (answer.equalsIgnoreCase("Yes")) {
-            Scanner input = new Scanner(System.in);
-            System.out.println("How much would you like to buy: " + line);
-            System.out.println("1. N200");
-            System.out.println("2. N500");
-            System.out.println("3. N1000");
-            System.out.println("4. Custom amount");
-            int choice = input.nextInt();
-            double amount = 0;
-            switch (choice) {
-                case 1:
-                    amount = 200;
-                    break;
-                case 2:
-                    amount = 500;
-                    break;
-                case 3:
-                    amount = 1000;
-                    break;
-                case 4:
-                    System.out.print("Enter the custom amount: ");
-                    amount = input.nextDouble();
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please select a valid option.");
-            }
-            try {
-                if ((ATM.getBalance() - amount) >= 0 && amount >= 0) {
-                    ATM.calcWithdraw(amount);
-                    System.out.println("\nYour new account balance: " + ATM.getBalance());
-                    System.out.println(credit(number) + "has been successfully credited");
-                } else {
-                    System.out.println("\nInsufficient balance.");
+        boolean repeatTransaction = true;
+        while (repeatTransaction) {
+            System.out.println("Please enter recipient's phone number: ");
+            String number = scanner.nextLine();
+            String line = credit(number);
+            System.out.println("This is an " + line + " number, do you wish to proceed? (Yes/No) ");
+            String answer = scanner.nextLine();
+            if (answer.equalsIgnoreCase("Yes")) {
+                Scanner input = new Scanner(System.in);
+                System.out.println("How much would you like to buy: ");
+                System.out.println("1. N100 - 200MB");
+                System.out.println("2. N500 - 1.0GB");
+                System.out.println("3. N1000 - 3.0GB");
+                System.out.println("4. Custom amount");
+                int choice = input.nextInt();
+                double amount = 0;
+                switch (choice) {
+                    case 1:
+                        amount = 200;
+                        break;
+                    case 2:
+                        amount = 500;
+                        break;
+                    case 3:
+                        amount = 1000;
+                        break;
+                    case 4:
+                        System.out.print("Enter the custom amount: ");
+                        amount = input.nextDouble();
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please select a valid option.");
                 }
-            } catch (InputMismatchException e) {
-                System.out.println("\nInvalid input. Please enter a valid amount.");
-                input.next();
+                try {
+                    if ((ATM.getBalance() - amount) >= 0 && amount >= 0) {
+                        ATM.calcWithdraw(amount);
+                        System.out.println("\nYour new account balance: " + ATM.getBalance());
+                        System.out.println("The" + credit(number) + " line has been successfully credited with " + amount + " worth of data.");
+                    } else {
+                        System.out.println("\nInsufficient balance.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("\nInvalid input. Please enter a valid amount.");
+                    input.next();
+                }
+            } else {
+                System.out.println("Cancelled");
             }
-        } else {
-            System.out.println("Cancelled");
+            System.out.println("\nWould you like to repeat this transaction?: (Yes/No) ");
+            String option = scanner.nextLine();
+            if (option.equalsIgnoreCase("Yes")) {
+                repeatTransaction = true;
+            } else {
+                return;
+            }
         }
     }
 
 //    @Override
     public void buyCredit() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter receipent's phone number: ");
-        String number = scanner.nextLine();
-        String line = credit(number);
-        System.out.println("This is an " + line + " number, do you wish to proceed? (Yes/No) ");
-        String answer = scanner.nextLine();
+        boolean repeatTransaction = true;
+        while (repeatTransaction) {
+            System.out.println("Please enter receipent's phone number: ");
+            String number = scanner.nextLine();
+            String line = credit(number);
+            System.out.println("This is an " + line + " number, do you wish to proceed? (Yes/No) ");
+            String answer = scanner.nextLine();
             if (answer.equalsIgnoreCase("Yes")) {
-                line = credit(number);
-                System.out.println(credit(number) + "has been successfully credited");
+                Scanner input = new Scanner(System.in);
+                System.out.println("How much would you like to buy: ");
+                System.out.println("1. N100");
+                System.out.println("2. N500");
+                System.out.println("3. N1000");
+                System.out.println("4. Custom amount");
+                int choice = input.nextInt();
+                double amount = 0;
+                switch (choice) {
+                    case 1:
+                        amount = 200;
+                        break;
+                    case 2:
+                        amount = 500;
+                        break;
+                    case 3:
+                        amount = 1000;
+                        break;
+                    case 4:
+                        System.out.print("Enter the custom amount: ");
+                        amount = input.nextDouble();
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please select a valid option.");
+                }
+                try {
+                    if ((ATM.getBalance() - amount) >= 0 && amount >= 0) {
+                        ATM.calcWithdraw(amount);
+                        System.out.println("\nYour new account balance: " + ATM.getBalance());
+                        System.out.println("The" + credit(number) + " line has been successfully credited with " + amount + " naira worth of credit.");
+                    } else {
+                        System.out.println("\nInsufficient balance.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("\nInvalid input. Please enter a valid amount.");
+                    input.next();
+                }
             } else {
                 System.out.println("Cancelled");
             }
+            System.out.println("\nWould you like to repeat this transaction?: (Yes/No) ");
+            String option = scanner.nextLine();
+            if (option.equalsIgnoreCase("Yes")) {
+                repeatTransaction = true;
+            } else {
+                return;
+            }
+        }
     }
-
     private static Map<String, String> CreditLine() {
         Map<String, String> credit = new HashMap<>();
         credit.put("0703", "MTN");
@@ -111,13 +165,13 @@ public class RechargeLine extends DisplayMenu {
         if (number.length() != 11) {
             return "Number must be equal to 11 digits";
         }
-        String digits = number.substring(0, 9);
+        String digits = number.substring(0, 4);
         Map<String, String> credit = CreditLine();
         String line = credit.get(digits);
             if (line != null) {
                 return line;
             } else {
-                return "Unable to retrieve line";
+                return " unable to retrieve line";
             }
     }
 }
