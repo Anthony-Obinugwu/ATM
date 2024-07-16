@@ -1,20 +1,22 @@
-import java.util.HashMap;
+import java.util.HashMap; // The utility for the mapping function below
 import java.util.InputMismatchException;
-import java.util.Map;
+import java.util.Map; // The utility for the mapping function below
 import java.util.Scanner;
 
 public class RechargeLine extends DisplayMenu {
-//    @Override
+    // Method to buy data
     public void buyData() {
         Scanner scanner = new Scanner(System.in);
-        boolean repeatTransaction = true;
+        boolean repeatTransaction = true; // Using boolean to instantiate while loop name
         while (repeatTransaction) {
             System.out.println("Please enter recipient's phone number: ");
             String number = scanner.nextLine();
+
+            // Determines the telecom line associated with the phone number
             String line = credit(number);
             System.out.println("This is an " + line + " number, do you wish to proceed? (Yes/No) ");
             String answer = scanner.nextLine();
-            if (answer.equalsIgnoreCase("Yes")) {
+            if (answer.equalsIgnoreCase("Yes")) { //using .equalsIgnoreCase to not return an error if user does not use right case
                 Scanner input = new Scanner(System.in);
                 System.out.println("How much would you like to buy: ");
                 System.out.println("1. N100 - 200MB");
@@ -23,7 +25,7 @@ public class RechargeLine extends DisplayMenu {
                 System.out.println("4. Custom amount");
                 int choice = input.nextInt();
                 double amount = 0;
-                switch (choice) {
+                switch (choice) { // Implementing switch case to handle user input
                     case 1:
                         amount = 200;
                         break;
@@ -41,14 +43,14 @@ public class RechargeLine extends DisplayMenu {
                         System.out.println("Invalid choice. Please select a valid option.");
                 }
                 try {
-                    if ((ATM.getBalance() - amount) >= 0 && amount >= 0) {
+                    if ((ATM.getBalance() - amount) >= 0 && amount >= 0) { // To check if there is enough balance and the amount is valid
                         ATM.calcWithdraw(amount);
                         System.out.println("\nYour new account balance: " + ATM.getBalance());
                         System.out.println("The" + credit(number) + " line has been successfully credited with " + amount + " worth of data.");
                     } else {
                         System.out.println("\nInsufficient balance.");
                     }
-                } catch (InputMismatchException e) {
+                } catch (InputMismatchException e) { // Catches error (anything that is not an integer) then throws statement.
                     System.out.println("\nInvalid input. Please enter a valid amount.");
                     input.next();
                 }
@@ -57,7 +59,7 @@ public class RechargeLine extends DisplayMenu {
             }
             System.out.println("\nWould you like to repeat this transaction?: (Yes/No) ");
             String option = scanner.nextLine();
-            if (option.equalsIgnoreCase("Yes")) {
+            if (option.equalsIgnoreCase("Yes")) { //using .equalsIgnoreCase to not return an error if user does not use right case
                 repeatTransaction = true;
             } else {
                 return;
@@ -65,17 +67,18 @@ public class RechargeLine extends DisplayMenu {
         }
     }
 
-//    @Override
     public void buyCredit() {
         Scanner scanner = new Scanner(System.in);
-        boolean repeatTransaction = true;
+        boolean repeatTransaction = true; // Using boolean to instantiate while loop name
         while (repeatTransaction) {
             System.out.println("Please enter receipent's phone number: ");
             String number = scanner.nextLine();
+
+            // Determine the telecom line associated with the phone number
             String line = credit(number);
             System.out.println("This is an " + line + " number, do you wish to proceed? (Yes/No) ");
             String answer = scanner.nextLine();
-            if (answer.equalsIgnoreCase("Yes")) {
+            if (answer.equalsIgnoreCase("Yes")) { //using .equalsIgnoreCase to not return an error if user does not use right case
                 Scanner input = new Scanner(System.in);
                 System.out.println("How much would you like to buy: ");
                 System.out.println("1. N100");
@@ -84,7 +87,7 @@ public class RechargeLine extends DisplayMenu {
                 System.out.println("4. Custom amount");
                 int choice = input.nextInt();
                 double amount = 0;
-                switch (choice) {
+                switch (choice) { // Implementing switch case to handle user input
                     case 1:
                         amount = 200;
                         break;
@@ -102,7 +105,7 @@ public class RechargeLine extends DisplayMenu {
                         System.out.println("Invalid choice. Please select a valid option.");
                 }
                 try {
-                    if ((ATM.getBalance() - amount) >= 0 && amount >= 0) {
+                    if ((ATM.getBalance() - amount) >= 0 && amount >= 0) { // To check if there is enough balance and the amount is valid
                         ATM.calcWithdraw(amount);
                         System.out.println("\nYour new account balance: " + ATM.getBalance());
                         System.out.println("The" + credit(number) + " line has been successfully credited with " + amount + " naira worth of credit.");
@@ -118,14 +121,14 @@ public class RechargeLine extends DisplayMenu {
             }
             System.out.println("\nWould you like to repeat this transaction?: (Yes/No) ");
             String option = scanner.nextLine();
-            if (option.equalsIgnoreCase("Yes")) {
+            if (option.equalsIgnoreCase("Yes")) { //using .equalsIgnoreCase to not return an error if user does not use right case
                 repeatTransaction = true;
             } else {
                 return;
             }
         }
     }
-    private static Map<String, String> CreditLine() {
+    private static Map<String, String> CreditLine() { // Method to map telecom prefixes to their corresponding network names
         Map<String, String> credit = new HashMap<>();
         credit.put("0703", "MTN");
         credit.put("0706", "MTN");
@@ -161,11 +164,11 @@ public class RechargeLine extends DisplayMenu {
         return credit;
     }
 
-    public static String credit(String number) {
-        if (number.length() != 11) {
+    public static String credit(String number) { // Method to identify the telecom line based on the phone number prefix
+        if (number.length() != 11) { // Condition making sure the number is 11 digits
             return "Number must be equal to 11 digits";
         }
-        String digits = number.substring(0, 4);
+        String digits = number.substring(0, 4); // .substring used to scan the first 4 digits of user input
         Map<String, String> credit = CreditLine();
         String line = credit.get(digits);
             if (line != null) {

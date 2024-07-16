@@ -13,6 +13,7 @@ public class AccountInformation extends ATM {
     }
 
     public AccountInformation(String userName, String cardNumber, String cvv, String expiryDate) {
+        // Parameter constructors to initialize account information
         this.userName = userName;
         this.cardNumber = cardNumber;
         this.cvv = cvv;
@@ -48,9 +49,10 @@ public class AccountInformation extends ATM {
         this.displayMenu = displayMenu;
     }
 
+    // Method to reset PIN
     public void resetPin() {
         Scanner scanner = new Scanner(System.in);
-        boolean repeatReset = true;
+        boolean repeatReset = true; // Using boolean to instantiate while loop name
         while (repeatReset) {
             System.out.println("Enter the last 6 digit of your card number: ");
             String cardLast6Digits = scanner.nextLine();
@@ -59,8 +61,9 @@ public class AccountInformation extends ATM {
             System.out.println("Card Expiry Date (MM/YY): ");
             String expiry = scanner.nextLine();
 
-            String last6Digits = cardNumber != null ? cardNumber.substring(cardNumber.length() - 6) : "";
-            if (cardLast6Digits.equals(last6Digits) && cardCvv.equals(this.cvv) && expiry.equals(this.expiryDate)) {
+            // Validating card details before allowing PIN reset
+            String last6Digits = cardNumber != null ? cardNumber.substring(cardNumber.length() - 6) : ""; // Reading the last six digits of the card number
+            if (cardLast6Digits.equals(last6Digits) && cardCvv.equals(this.cvv) && expiry.equals(this.expiryDate)) { // Making sure the card details are validated before user can reset pin
                 System.out.println("Enter New Pin: ");
                 String newPin = scanner.nextLine();
                 System.out.println("Confirm new Pin: ");
@@ -82,9 +85,9 @@ public class AccountInformation extends ATM {
             } else {
                 System.out.println("Card details do not match.");
             }
-            System.out.println("\nWould you like to change this pin again?: (Yes/No) ");
+            System.out.println("\nWould you like to change this pin again?: (Yes/No) "); // Check if the user wants to repeat PIN reset
             String option = scanner.nextLine();
-            if (!option.equalsIgnoreCase("Yes")) {
+            if (!option.equalsIgnoreCase("Yes")) { // Return to main menu after PIN reset
                 repeatReset = true;
             }
         }  if (displayMenu != null) {
@@ -92,13 +95,14 @@ public class AccountInformation extends ATM {
         }
     }
 
+    // Method to change PIN
     public void changePin() {
         Scanner scanner = new Scanner(System.in);
         boolean repeatReset = true;
         while (repeatReset) {
             System.out.println("Enter current Pin: ");
             String currentPin = scanner.nextLine();
-            if (currentPin.equals(String.valueOf(CODE))) {
+            if (currentPin.equals(String.valueOf(CODE))) { // Using .equals(String.valueof()) to make sure inputted pin matches current set pin
                 System.out.println("Enter new Pin: ");
                 String newPin = scanner.nextLine();
                 System.out.println("Confirm new Pin: ");
@@ -121,14 +125,14 @@ public class AccountInformation extends ATM {
             }
             System.out.println("\nWould you like to change this pin again?: (Yes/No) ");
             String option = scanner.nextLine();
-            if (!option.equalsIgnoreCase("Yes")) {
+            if (!option.equalsIgnoreCase("Yes")) { // Check if the user wants to repeat PIN change
                 repeatReset = true;
             }
-        } if (displayMenu != null) {
+        } if (displayMenu != null) { // Return to main menu after PIN change
             displayMenu.displayMenu();
         }
     }
-        public void displayAccountInformation() {
+        public void displayAccountInformation() { // Method to display all user details
             System.out.println("User Name: " + userName);
             System.out.println("Account Number: " + cardNumber);
             System.out.println("CVV: " + cvv);

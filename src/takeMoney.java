@@ -2,6 +2,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class takeMoney extends DisplayMenu {
+
+    // Method to handle the withdrawal process
     static void withdraw() {
         Scanner input = new Scanner(System.in);
         System.out.println("Select the amount to withdraw:");
@@ -10,9 +12,9 @@ public class takeMoney extends DisplayMenu {
         System.out.println("3. N1000");
         System.out.println("4. Custom amount");
         int choice = input.nextInt();
-        double amount = 0;
+        double amount = 0; //Variable to store the withdrawal amount
 
-        switch (choice) {
+        switch (choice) { // Switch statement to determine the amount based on user's choice
             case 1:
                 amount = 200;
                 break;
@@ -31,9 +33,10 @@ public class takeMoney extends DisplayMenu {
                 return;
         }
 
+        // Try block to handle withdrawal logic and potential exceptions
         try {
             System.out.println("\nCurrent Account Balance: " + ATM.getBalance());
-            if ((ATM.getBalance() - amount) >= 0 && amount >= 0) {
+            if ((ATM.getBalance() - amount) >= 0 && amount >= 0) { // Check if sufficient balance and the amount to withdraw is non-negative
                 ATM.calcWithdraw(amount);
                 System.out.println("\nYour new account balance: " + ATM.getBalance());
             } else {

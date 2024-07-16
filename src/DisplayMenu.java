@@ -21,7 +21,7 @@ public class DisplayMenu extends ATM {
             AccountInformation accountInfo;
             accountInfo = new AccountInformation();
 
-            switch (choice) {
+            switch (choice) { // Implementing switch case to handle user input
                 case 1:
                     checkMoney.checkBalance(); // call method to check user balance
                     break;
